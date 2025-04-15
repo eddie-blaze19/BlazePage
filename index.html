@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en" class="light-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blaze Page</title>
+    <style>
+        /* Base styles */
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --accent-color: #4a6eb5;
+            --accent-dark: #2c4475;
+            --border-color: #dddddd;
+            --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --skill-bg: #e9ecef;
+            --footer-bg: #333333;
+            --footer-text: #bbbbbb;
+            --footer-border: #444444;
+            --card-color: rgba(255, 255, 255, 0.77);
+            --card-border:rgba(240, 242, 245, 0.3) ;
+            --sun-and-moon :'☀️';
+            --cloud:url("images/day.gif");
+            --Engineer:#4a6eb5;;
+        }
+        
+        .dark-mode {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #cccccc;
+            --accent-color: rgb(45, 48, 71);
+            --accent-dark: #4a6eb5;
+            --border-color: #444444;
+            --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            --skill-bg: #444444;
+            --footer-bg: #111111;
+            --footer-text: #aaaaaa;
+            --footer-border: #333333;
+            --card-color: rgba(17, 25, 40, 0.39) ;
+            --card-border:rgba(255, 255, 255, 0.125);
+            --sun-and-moon :'🌙';
+            --cloud:url("images/night.gif");
+            --Engineer:rgb(126, 128, 148);
+
+        }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 240px);
+    grid-gap: 32px;
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    background-color: var(--background-color);
+    box-shadow: 0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur)
+            var(--card-box-shadow-1),
+        0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur)
+            var(--card-box-shadow-2),
+        0 0 0 1px var(--card-border-color);
+    padding: 56px 16px 16px 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    transition: box-shadow 0.25s;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 15px;
+        background-color: var(--card-background-color);
+    }
+
+    .icon {
+        z-index: 2;
+        position: relative;
+        display: table;
+        padding: 8px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 4.5px;
+            border-radius: 50%;
+            background-color: var(--card-icon-background-color);
+            border: 1px solid var(--card-icon-border-color);
+            backdrop-filter: blur(2px);
+            transition: background-color 0.25s, border-color 0.25s;
+        }
+
+        svg {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 24px;
+            height: 24px;
+            transform: translateZ(0);
+            color: var(--card-icon-color);
+            transition: color 0.25s;
+        }
+    }
+
+    h4 {
+        z-index: 2;
+        position: relative;
+        margin: 12px 0 4px 0;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 2;
+        color: var(--card-label-color);
+    }
+
+    p {
+        z-index: 2;
+        position: relative;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--text-color);
+    }
+
+    .shine {
+        border-radius: inherit;
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 0.5s;
+
+        &:before {
+            content: "";
+            width: 150%;
+            padding-bottom: 150%;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            bottom: 55%;
+            filter: blur(35px);
+            opacity: var(--card-shine-opacity);
+            transform: translateX(-50%);
+            background-image: var(--card-shine-gradient);
+        }
+    }
+
+    .background {
+        border-radius: inherit;
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        -webkit-mask-image: radial-gradient(
+            circle at 60% 5%,
+            black 0%,
+            black 15%,
+            transparent 60%
+        );
+        mask-image: radial-gradient(
+            circle at 60% 5%,
+            black 0%,
+            black 15%,
+            transparent 60%
+        );
+
+        .tiles {
+            opacity: 0;
+            transition: opacity 0.25s;
+
+            .tile {
+                position: absolute;
+                background-color: var(--card-tile-color);
+                animation-duration: 8s;
+                animation-iteration-count: infinite;
+                opacity: 0;
+
+                &.tile-4,
+                &.tile-6,
+                &.tile-10 {
+                    animation-delay: -2s;
+                }
+
+                &.tile-3,
+                &.tile-5,
+                &.tile-8 {
+                    animation-delay: -4s;
+                }
+
+                &.tile-2,
+                &.tile-9 {
+                    animation-delay: -6s;
+                }
+
+                &.tile-1 {
+                    top: 0;
+                    left: 0;
+                    height: 10%;
+                    width: 22.5%;
+                }
+
+                &.tile-2 {
+                    top: 0;
+                    left: 22.5%;
+                    height: 10%;
+                    width: 27.5%;
+                }
+
+                &.tile-3 {
+                    top: 0;
+                    left: 50%;
+                    height: 10%;
+                    width: 27.5%;
+                }
+
+                &.tile-4 {
+                    top: 0;
+                    left: 77.5%;
+                    height: 10%;
+                    width: 22.5%;
+                }
+
+                &.tile-5 {
+                    top: 10%;
+                    left: 0;
+                    height: 22.5%;
+                    width: 22.5%;
+                }
+
+                &.tile-6 {
+                    top: 10%;
+                    left: 22.5%;
+                    height: 22.5%;
+                    width: 27.5%;
+                }
+
+                &.tile-7 {
+                    top: 10%;
+                    left: 50%;
+                    height: 22.5%;
+                    width: 27.5%;
+                }
+
+                &.tile-8 {
+                    top: 10%;
+                    left: 77.5%;
+                    height: 22.5%;
+                    width: 22.5%;
+                }
+
+                &.tile-9 {
+                    top: 32.5%;
+                    left: 50%;
+                    height: 22.5%;
+                    width: 27.5%;
+                }
+
+                &.tile-10 {
+                    top: 32.5%;
+                    left: 77.5%;
+                    height: 22.5%;
+                    width: 22.5%;
+                }
+            }
+        }
+
+        @keyframes tile {
+            0%,
+            12.5%,
+            100% {
+                opacity: 1;
+            }
+
+            25%,
+            82.5% {
+                opacity: 0;
+            }
+        }
+
+        .line {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.35s;
+
+            &:before,
+            &:after {
+                content: "";
+                position: absolute;
+                background-color: var(--card-line-color);
+                transition: transform 0.35s;
+            }
+
+            &:before {
+                left: 0;
+                right: 0;
+                height: 1px;
+                transform-origin: 0 50%;
+                transform: scaleX(0);
+            }
+
+            &:after {
+                top: 0;
+                bottom: 0;
+                width: 1px;
+                transform-origin: 50% 0;
+                transform: scaleY(0);
+            }
+
+            &.line-1 {
+                &:before {
+                    top: 10%;
+                }
+
+                &:after {
+                    left: 22.5%;
+                }
+
+                &:before,
+                &:after {
+                    transition-delay: 0.3s;
+                }
+            }
+
+            &.line-2 {
+                &:before {
+                    top: 32.5%;
+                }
+
+                &:after {
+                    left: 50%;
+                }
+
+                &:before,
+                &:after {
+                    transition-delay: 0.15s;
+                }
+            }
+
+            &.line-3 {
+                &:before {
+                    top: 55%;
+                }
+
+                &:after {
+                    right: 22.5%;
+                }
+            }
+        }
+    }
+
+    &:hover {
+        box-shadow: 0px 3px 6px var(--card-hover-box-shadow-1),
+            0px var(--card-hover-box-shadow-2-y)
+                var(--card-hover-box-shadow-2-blur)
+                var(--card-hover-box-shadow-2),
+            0 0 0 1px var(--card-hover-border-color);
+
+        .icon {
+            &::after {
+                background-color: var(--card-hover-icon-background-color);
+                border-color: var(--card-hover-icon-border-color);
+            }
+
+            svg {
+                color: var(--card-hover-icon-color);
+            }
+        }
+
+        .shine {
+            opacity: 1;
+            transition-duration: 0.5s;
+            transition-delay: 0s;
+        }
+
+        .background {
+            .tiles {
+                opacity: 1;
+                transition-delay: 0.25s;
+
+                .tile {
+                    animation-name: tile;
+                }
+            }
+
+            .line {
+                opacity: 1;
+                transition-duration: 0.15s;
+
+                &:before {
+                    transform: scaleX(1);
+                }
+
+                &:after {
+                    transform: scaleY(1);
+                }
+
+                &.line-1 {
+                    &:before,
+                    &:after {
+                        transition-delay: 0s;
+                    }
+                }
+
+                &.line-2 {
+                    &:before,
+                    &:after {
+                        transition-delay: 0.15s;
+                    }
+                }
+
+                &.line-3 {
+                    &:before,
+                    &:after {
+                        transition-delay: 0.3s;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.day-night {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    opacity: 0.3;
+
+    input {
+        display: none;
+
+        & + div {
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            position: relative;
+            box-shadow: inset 8px -8px 0 0 var(--text-color);
+            transform: scale(1) rotate(-2deg);
+            transition: box-shadow 0.5s ease 0s, transform 0.4s ease 0.1s;
+
+            &:before {
+                content: "";
+                width: inherit;
+                height: inherit;
+                border-radius: inherit;
+                position: absolute;
+                left: 0;
+                top: 0;
+                transition: background-color 0.3s ease;
+            }
+
+            &:after {
+                content: "";
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                margin: -3px 0 0 -3px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                box-shadow: 0 -23px 0 var(--text-color),
+                    0 23px 0 var(--text-color), 23px 0 0 var(--text-color),
+                    -23px 0 0 var(--text-color), 15px 15px 0 var(--text-color),
+                    -15px 15px 0 var(--text-color),
+                    15px -15px 0 var(--text-color),
+                    -15px -15px 0 var(--text-color);
+                transform: scale(0);
+                transition: all 0.3s ease;
+            }
+        }
+
+        &:checked + div {
+            box-shadow: inset 20px -20px 0 0 var(--text-color);
+            transform: scale(0.5) rotate(0deg);
+            transition: transform 0.3s ease 0.1s, box-shadow 0.2s ease 0s;
+
+            &:before {
+                background-color: var(--text-color);
+                transition: background-color 0.3s ease 0.1s;
+            }
+
+            &:after {
+                transform: scale(1);
+                transition: transform 0.5s ease 0.15s;
+            }
+        }
+    }
+}
+
+html {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+* {
+    box-sizing: inherit;
+    &:before,
+    &:after {
+        box-sizing: inherit;
+    }
+}
+ 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-image: url();
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease; 
+            overflow-x: hidden;
+        }
+        
+
+        
+        
+        a {
+            text-decoration: none;
+            color: var(--accent-color);
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent-dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            align-content: space-between;
+        } 
+ 
+ 
+        /* Header */
+        header {
+            background-color: var(--bg-secondary);
+            box-shadow: var(--card-shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .toggle-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            margin-left: 20px;
+            border-radius: 15px;
+            background-color: var(--bg-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle::before {
+            content: '🔥';
+            position: absolute;
+            top: 5px;
+            left: 7px;
+            font-size: 16px;
+        }
+        
+        .theme-toggle::after {
+            content: var(--sun-and-moon);
+            position: absolute;
+            top: 5px;
+            right: 7px;
+            font-size: 16px;
+        }
+        
+        .toggle-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .toggle-thumb {
+            left: 32px;
+        }
+        
+        .burger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-primary);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Hero section */
+        .hero { 
+            display: flex;
+            align-items: center; 
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+ 
+            width: 100%;
+            max-width: 1980px;
+            background-image: url(./images/D1.jpg);
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 2;
+
+        }
+        
+        .hero-content { 
+            height: 470px;
+            max-width: 900px;   
+            padding: 26px; 
+            margin: 0 auto 40px;
+            z-index: 10;
+
+            backdrop-filter: blur(1px) saturate(144%);
+            -webkit-backdrop-filter: blur(1px) saturate(144%);
+            background-color: var(--card-color) ;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            
+
+        } 
+         .hero-box {
+            width: 100%;
+            display: flex;  
+            flex-direction: row; 
+            
+        }
+        .hero-box .hero-img  {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--footer-bg);
+            background-image: var(--cloud);
+        }
+        .hero-box .hero-img img{
+            width: 170px;
+            height: 170px; 
+        }
+        
+        
+        .hero h1 {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 47px; 
+            color: var(--text-primary);
+            z-index: 20; 
+        }
+        
+        .hero p {
+            font-size: 28px;
+            margin-bottom: 5px;
+            line-height: 2.0;
+            color: var(--text-secondary);
+        }
+        .hero img{
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+        .hero-content .inner{
+            width: 25%;
+        }
+        .hero-content .inner-2{
+            width: 55%;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            z-index: 20;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--accent-dark);
+            color: white;
+        }
+
+        .animated-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(79, 172, 254, 0.7), transparent);
+            animation: moveLine linear infinite;
+        }
+        
+        .line:nth-child(1) {
+            top: 15%;
+            animation-duration: 7s;
+        }
+        
+        .line:nth-child(2) {
+            top: 30%;
+            animation-duration: 12s;
+            animation-delay: 1s;
+        }
+        
+        .line:nth-child(3) {
+            top: 45%;
+            animation-duration: 10s;
+            animation-delay: 2s;
+        }
+        
+        .line:nth-child(4) {
+            top: 60%;
+            animation-duration: 10s;
+            animation-delay: 3s;
+        }
+        
+        .line:nth-child(5) {
+            top: 75%;
+            animation-duration: 9s;
+            animation-delay: 0.5s;
+        }
+        
+        .line:nth-child(6) {
+            top: 90%;
+            animation-duration: 13s;
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes moveLine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+        } 
+        
+        /* About section */
+        .about {
+            padding: 80px 0;
+            background-color: var(--bg-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .about-content {
+            display: flex; 
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .about-content .about-text p {
+            font-size: 15px;
+            line-height: 2;
+            
+        }
+        .about-text {
+            flex-basis: 60%;
+            color: var(--text-primary);
+        }
+        
+        .about-image {
+            margin-top: 20px;
+            flex-basis: 35%;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .skills {
+            margin-top: 30px;
+        }
+        
+        .skill-item {
+            margin-bottom: 15px;
+        }
+        
+        .skill-name {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .skill-progress {
+            height: 8px;
+            background-color: var(--skill-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-bar {
+            height: 100%;
+            background-color: var(--accent-color);
+        }
+        
+        /* Portfolio section */
+        .portfolio {
+            padding: 100px 0;
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-gap: 30px;
+        }
+        
+        .portfolio-item {
+            background-color: var(--bg-secondary);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .portfolio-image {
+            height: 250px;
+            background-color: var(--skill-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .portfolio-content {
+            padding: 20px;
+            color: var(--text-primary);
+        }
+        
+        .portfolio-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        .portfolio-category {
+            display: inline-block;
+            background-color: var(--skill-bg);
+            color: var(--text-secondary);
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }  
+
+        /* Services section */
+        .services {
+            padding: 100px 0;
+            background-color: var(--bg-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 30px;
+        }
+        
+        .service-item {
+            padding: 30px;
+            background-color: var(--bg-primary);
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .service-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        /* Contact section */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .contact-info {
+            flex-basis: 45%;
+        }
+        
+        .contact-form {
+            flex-basis: 50%;
+        }
+        
+        .contact-item {
+            display: flex;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .contact-icon {
+            margin-right: 15px;
+            color: var(--accent-color);
+            font-size: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: inherit;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        
+        textarea.form-control {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            background-color: var(--accent-dark);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: white;
+            padding: 50px 0 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section {
+            flex-basis: 30%;
+            margin-bottom: 30px;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            color: white;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--footer-text);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            list-style: none;
+            display: flex;
+        }
+        
+        .social-links li {
+            margin-right: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--footer-border);
+            font-size: 14px;
+            color: var(--footer-text);
+        }
+        
+        /* Responsive design */
+        @media screen and (max-width: 992px) {
+            .about-text, .about-image {
+                flex-basis: 100%;
+            }
+            
+            .about-image {
+                margin-top: 30px;
+            }
+            
+            .contact-info, .contact-form {
+                flex-basis: 100%;
+            }
+            
+            .contact-info {
+                margin-bottom: 40px;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .toggle-container {
+                margin-right: 50px;
+            }
+            
+            .nav-links {
+                position: fixed;
+                right: 0;
+                height: 100vh;
+                top: 80px;
+                background-color: var(--bg-secondary);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 50%;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in, background-color 0.3s ease;
+                box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+                z-index: 99;
+            }
+            
+            .nav-links li {
+                margin: 20px 0;
+            }
+            
+            .burger {
+                display: block;
+            }
+            
+            .nav-active {
+                transform: translateX(0%);
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 30px;
+            }
+            
+            .footer-section {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+ 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="slide-style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Blaze Portfolio </div>
+                <div class="toggle-container">
+                    <div class="theme-toggle" id="theme-toggle">
+                        <div class="toggle-thumb"></div>
+                    </div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="burger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero" style="background-image: url(./images/L6.jpg);"> 
+
+          <!-- Background images -->
+  <div  class="background light-bg" id="lightBackground"></div>
+  <div class="background dark-bg" id="darkBackground"></div>
+
+        <div class="container" id="hero">
+            <div class="animated-lines">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="hero-content">
+            <div class="hero-box">
+ 
+                <div class="hero-name">
+                <h1>Hello, My Name is </h1>
+                <a href="https://www.linkedin.com/in/edwarddziworshie/" style="background-color: var(--bg-primary);"  >
+                    <h1><span style="color: var(--Engineer); font-style: italic;">Edward Dziworshie </span></h1>
+                </a> 
+                </div>
+                <div class="inner"></div>
+                <div class="hero-img">
+                    <img src="./images/me.jpg" alt="^">
+                </div>
+
+            </div>
+                <p>
+                    I am a  
+                     Software developer 
+                     , Cloud Engineer  
+                     , Tech Researcher 
+                     , and Project Manager 
+                </p> 
+                <div class="hero-box"style="margin-top: 17px ;"  >
+                    <img style="margin-right: 10px;" src="./images/update.gif" alt="^">
+                    <img style="margin-right: 10px;" src="./images/cloud.gif" alt="^">
+                    <img style="margin-right: 10px;" src="./images/finder.gif" alt="^">
+                    <img style="margin-right: 10px;" src="./images/consulting.gif" alt="^">
+                 <div class="inner-2"></div>
+                <a href="#contact" class="cta-button">Get In Touch</a>
+
+            </div>
+
+            </div>
+        </div>
+ 
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">Learn more about me and what I do</p>
+            
+            <div class="about-content">
+                <div class="about-text"> 
+                        <p> 
+                        I am an IT professional with 3 years of experience in creating 
+                        stunning and functional Web applications. My passion lies in turning complex problems 
+                        into simple, beautiful and intuitive designs.  
+                        My strengths include strategic development, project leadership, 
+                        problem-solving, continuous learning, time management, communication, and teamwork. 
+                        I have skills in Agile Development, Angular, React, HTML-CSS, CRM Software, 
+                        Data Manipulation, GitHub, Java, Bash Scripting, Microsoft Office Suite, SQL, 
+                        Typescript, VBA, Python, Cloud computing, System Security and Risk management.  
+                           
+                        </p>
+                            <br>  
+                        <p>  
+                            My work experience includes working as a Management Information Systems Officer at GLICO Pension. 
+                            In this role, I used Excel for data manipulation and analysis and created VBA codes that increased productivity by 30%. 
+                        </p>
+                            <br>  
+                        <p>  
+                            As a Freelance Software Developer, I incorporated database technologies, improved system responsiveness by 15%, 
+                            and enhanced user experience to ensure customer satisfaction. Earlier in my career, I was an IT Support Intern at Ghana Water Company Limited.
+                        </p>
+                            <br>  
+                         <p>
+                            I am currently undergoing AWS Cloud Engineer Training at Azubi Africa.
+                         </p>
+                    
+                    <div class="skills">
+                        <div class="skill-item">
+                            <div class="skill-name"> Project Management </div>
+                            <div class="skill-progress">
+                                <div class="skill-bar" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-name">Software Development</div>
+                            <div class="skill-progress">
+                                <div class="skill-bar" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-name">Cloud Engineering</div>
+                            <div class="skill-progress">
+                                <div class="skill-bar" style="width: 20%;"></div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <img src="./images/edward.jpg" alt="placeholder">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">My Portfolio</h2>
+            <p class="section-subtitle">Check out some of my recent work</p>
+            
+            <div class="portfolio-grid">
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image" >  
+
+                        <div id="slider">
+                          <input type="radio" name="slider" id="slide1" checked>
+                          <input type="radio" name="slider" id="slide2">
+                          <input type="radio" name="slider" id="slide3">
+                          <input type="radio" name="slider" id="slide4">
+                          <div id="slides">
+                             <div id="overflow">
+                                <div class="inner">
+                                   <div class="slide slide_1" style="
+                                   background-image: url(./images/Creative\ Minds.png) ;
+                                   background-size: cover;
+                                   background-position: center;
+                                   background-repeat: no-repeat;">
+                                      <div class="slide-content"> 
+                                       </div>
+                                   </div>
+                                   <div class="slide slide_2" style="
+                                   background-image: url(./images/CK\ 2.png) ;
+                                   background-size: cover;
+                                   background-position: center;
+                                   background-repeat: no-repeat;">
+                                      <div class="slide-content">
+                                            
+                                       </div>
+                                   </div>
+                                   <div class="slide slide_3" style="
+                                   background-image: url(./images/CK\ 1.png) ;
+                                   background-size: cover;
+                                   background-position: center;
+                                   background-repeat: no-repeat;
+                                   z-index: 1;">
+                                      <div class="slide-content"> 
+                                      </div>
+                                   </div>
+                                   <div class="slide slide_4"style="
+                                   background-image: url(./images/CK\ 2.png) ;
+                                   background-size: cover;
+                                   background-position: center;
+                                   background-repeat: no-repeat;">
+                                      <div class="slide-content">
+                                          
+                                      </div>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                          <div id="controls">
+                             <label for="slide1"></label>
+                             <label for="slide2"></label>
+                             <label for="slide3"></label>
+                             <label for="slide4"></label>
+                          </div>
+                          <div id="bullets">
+                             <label for="slide1"></label>
+                             <label for="slide2"></label>
+                             <label for="slide3"></label>
+                             <label for="slide4"></label>
+                          </div>
+                       </div>
+          
+                         </div> 
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Cloud Computing</span>
+                        <h3 class="portfolio-title">S3 static Website</h3>
+                        <p>A fully responsive freelancer Designer website with modern design and seamless user experience deployed using AWS S3.</p>
+                         
+                    </div>
+                </div>
+                
+                <div class="portfolio-item">
+                    <div class="portfolio-image">  
+
+                  <div id="slider">
+                    <input type="radio" name="slider" id="slide5">
+                    <input type="radio" name="slider" id="slide6">
+                    <input type="radio" name="slider" id="slide7">
+                    <input type="radio" name="slider" id="slide8">
+                    <div id="slides">
+                       <div id="overflow">
+                          <div class="inner">
+                             <div class="slide slide_5" style="
+                             background-image: url(./images/CK\ 1.png) ;
+                             background-size: cover;
+                             background-position: center;
+                             background-repeat: no-repeat;">
+                                <div class="slide-content"> 
+                                 </div>
+                             </div>
+                             <div class="slide slide_6" style="
+                             background-image: url(./images/CK\ 2.png) ;
+                             background-size: cover;
+                             background-position: center;
+                             background-repeat: no-repeat;">
+                                <div class="slide-content">
+                                      
+                                 </div>
+                             </div>
+                             <div class="slide slide_7" style="
+                             background-image: url(./images/CK\ 1.png) ;
+                             background-size: cover;
+                             background-position: center;
+                             background-repeat: no-repeat;
+                             z-index: 1;">
+                                <div class="slide-content"> 
+                                </div>
+                             </div>
+                             <div class="slide slide_8"style="
+                             background-image: url(./images/CK\ 2.png) ;
+                             background-size: cover;
+                             background-position: center;
+                             background-repeat: no-repeat;">
+                                <div class="slide-content">
+                                    
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div id="controls">
+                       <label for="slide5"></label>
+                       <label for="slide6"></label>
+                       <label for="slide7"></label>
+                       <label for="slide8"></label>
+                    </div>
+                    <div id="bullets">
+                        <label for="slide5"></label>
+                        <label for="slide6"></label>
+                        <label for="slide7"></label>
+                        <label for="slide8"></label>
+                    </div>
+                 </div>
+    
+                   </div> 
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Mobile App</span>
+                        <h3 class="portfolio-title">Educational App</h3>
+                        <p>A mobile app designed to help users track their course progressing, take quizs and access their Student portal.</p>
+                        
+                    </div>
+                </div>
+                
+                <div class="portfolio-item">
+                    <div class="portfolio-image">  
+
+                        <div id="slider">
+                          <input type="radio" name="slider" id="slide9">
+                          <input type="radio" name="slider" id="slide10">
+                          <input type="radio" name="slider" id="slide11">
+                          <input type="radio" name="slider" id="slide12">
+                          <div id="slides">
+                             <div id="overflow">
+                                <div class="inner">
+                                   <div class="slide slide_1" style="
+                                   background-image: url(./images/CK\ 1.png) ;
+                                   background-size: cover;
+                                   background-position: center;
+                                   background-repeat: no-repeat;">
+                                      <div class="slide-content"> 
+                                       </div>
+                                   </div>
+                                   <div class="slide slide_2" style="
+                                   background-image: url(./images/CK\ 2.png) ;
+                                   background-size: cover;
+                                   background-position: center;
+                                   background-repeat: no-repeat;">
+                                      <div class="slide-content">
+                                            
+                                       </div>
+                                   </div>
+                                   <div class="slide slide_3" style="
+                                   background-image: url(./images/CK\ 1.png) ;
+                                   background-size: cover;
+                                   background-position: center;
+                                   background-repeat: no-repeat;
+                                   z-index: 1;">
+                                      <div class="slide-content"> 
+                                      </div>
+                                   </div>
+                                   <div class="slide slide_4"style="
+                                   background-image: url(./images/CK\ 2.png) ;
+                                   background-size: cover;
+                                   background-position: center;
+                                   background-repeat: no-repeat;">
+                                      <div class="slide-content">
+                                          
+                                      </div>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                          <div id="controls">
+                             <label for="slide9"></label>
+                             <label for="slide10"></label>
+                             <label for="slide11"></label>
+                             <label for="slide12"></label>
+                          </div>
+                          <div id="bullets">
+                            <label for="slide9"></label>
+                            <label for="slide10"></label>
+                            <label for="slide11"></label>
+                            <label for="slide12"></label>
+                          </div>
+                       </div>
+          
+                         </div> 
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Web Application</span>
+                        <h3 class="portfolio-title">    Inventory Management System</h3>
+                        <p>A comprehensive  Inventory management system with real-time updates and Inventory track features.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">My Services</h2>
+            <p class="section-subtitle">What I can do for you</p>
+            
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="service-title">Software Development</h3>
+                    <p>Custom applications development with clean code and modern technologies.</p>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fa fa-terminal" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="service-title">IT Support</h3>
+                    <p>troubleshooting, software questions, system performance and IT resource management.</p>
+                </div>
+                
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fa fa-cloud" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="service-title">Cloud Solutions architect</h3>
+                    <p>designing and implementing cloud-based systems to meet a company's technical and business needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <p class="section-subtitle">Get in touch with me</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Location</h3>
+                            <p>Accra, Greater Accra Region, Ghana</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p> <a href="mailto:blazeeddie70@blazepage.online">@blazepage.online</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>+233541779818 </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form action="https://api.web3forms.com/submit" method="POST"> 
+ 
+                        <input type="hidden" name="access_key" value="e216548f-14f3-44e6-a3b5-b4c94cf5bdf6">
+
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input name="message" type="text" class="form-control" placeholder="Subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea name="message" class="form-control" placeholder="Type your message to me here and i will reply to your email within 5 days" required></textarea>
+                        </div>
+                        
+                        <!-- Honeypot Spam Protection -->
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Summary</h3>
+                    <p>I am a Project Manager, Software developer and Cloud Engineer dedicated to meeting and exceed expectations.</p>
+                    <br>
+                    <p>I am always open to new opportunities and challenges that push me to grow professionally.</p>
+
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Socials and Links</h3>
+                    <ul class="footer-links"> 
+                        <ul class="social-links">
+                       
+                            <li><a href="https://www.linkedin.com/in/edwarddziworshie/"><i class="fab fa-linkedin-in"></i></a></li>
+                            <li><a href="https://github.com/eddie-blaze19"><i class="fab fa-github"></i></a></li>
+                        </ul>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <p>Subscribe to my newsletter to receive updates on my latest projects and tech articles.</p>
+                    <br>
+                    <form action="https://api.web3forms.com/submit" method="POST"> 
+ 
+                        <input type="hidden" name="access_key" value="e216548f-14f3-44e6-a3b5-b4c94cf5bdf6">
+
+                        <div class="form-group"> 
+
+                            <input type="text" name="name" value="Newsletter"class="hidden" style="display: none;" required > 
+
+                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+
+                            <input type="text" name="message" value="Send me new Products and updates" class="hidden" style="display: none;" required > 
+                             
+                        </div>
+                        
+    <!-- Honeypot Spam Protection -->
+    <input type="checkbox" name="botcheck" class="hidden" style="display: none;"> 
+                        <button type="submit" class="submit-button">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Edward Dziworshie. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile menu toggle
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.nav-links');
+        
+        burger.addEventListener('click', () => {
+            nav.classList.toggle('nav-active');
+        });
+        
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('.nav-links li');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('nav-active');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Dark mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // Check for saved theme preference or use system preference
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark-mode');
+            htmlElement.classList.remove('light-mode');
+        } else {
+            htmlElement.classList.add('light-mode');
+            htmlElement.classList.remove('dark-mode');
+        }
+        
+        // Toggle theme when button is clicked
+        themeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark-mode')) {
+                htmlElement.classList.remove('dark-mode');
+                htmlElement.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.remove('light-mode');
+                htmlElement.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+      <script>
+        // Define image arrays for light and dark modes
+        const lightImages = [
+      'images/L1.jpg',
+      'images/L2.jpg',
+      'images/L3.jpg',
+      'images/L4.jpg',
+      'images/L5.jpg',
+      'images/L6.jpg',
+      'images/L7.jpg'
+        ];
+        
+        const darkImages = [ 
+        'images/D1.jpg',
+        'images/D2.jpg',
+        'images/D3.jpg',
+        'images/D4.jpg',
+        'images/D5.jpg'
+        ];
+        
+        let currentLightIndex = 0;
+        let currentDarkIndex = 0;
+        const lightBackground = document.getElementById('lightBackground');
+        const darkBackground = document.getElementById('darkBackground'); 
+        
+        // Initialize with first images
+        lightBackground.style.backgroundImage = `url(${lightImages[0]})`;
+        darkBackground.style.backgroundImage = `url(${darkImages[0]})`;
+        
+        // Theme toggle functionality
+        themeToggle.addEventListener('change', () => {
+          if (themeToggle.checked) {
+            document.body.setAttribute('data-theme', 'dark');
+          } else {
+            document.body.setAttribute('data-theme', 'light');
+          }
+        });
+        
+        // Function to change background images
+        function changeBackgrounds() {
+          // Update light mode background
+          currentLightIndex = (currentLightIndex + 1) % lightImages.length;
+          const newLightBg = document.createElement('div');
+          newLightBg.className = 'background light-bg';
+          newLightBg.style.backgroundImage = `url(${lightImages[currentLightIndex]})`;
+          newLightBg.style.opacity = '0';
+          document.body.appendChild(newLightBg);
+          
+          setTimeout(() => {
+            newLightBg.style.opacity = '1';
+            setTimeout(() => {
+              lightBackground.style.backgroundImage = `url(${lightImages[currentLightIndex]})`;
+              document.body.removeChild(newLightBg);
+            }, 1500);
+          }, 100);
+          
+          // Update dark mode background
+          currentDarkIndex = (currentDarkIndex + 1) % darkImages.length;
+          const newDarkBg = document.createElement('div');
+          newDarkBg.className = 'background dark-bg';
+          newDarkBg.style.backgroundImage = `url(${darkImages[currentDarkIndex]})`;
+          newDarkBg.style.opacity = '0';
+          document.body.appendChild(newDarkBg);
+          
+          setTimeout(() => {
+            newDarkBg.style.opacity = document.body.getAttribute('data-theme') === 'dark' ? '1' : '0';
+            setTimeout(() => {
+              darkBackground.style.backgroundImage = `url(${darkImages[currentDarkIndex]})`;
+              document.body.removeChild(newDarkBg);
+            }, 1500);
+          }, 100);
+        }
+        
+        // Change backgrounds every 9 seconds
+        setInterval(changeBackgrounds, 9000);
+      </script>
+</body>
+</html>
