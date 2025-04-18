@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Backgrounds</title>
+  <style>
+    :root {
+      --text-color: #333;
+      --bg-color: rgba(255, 255, 255, 0.85);
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --text-color: #f0f0f0;
+      --bg-color: rgba(30, 30, 30, 0.9);
+      --shadow-color: rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-color);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+
+ 
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-label {
+      margin-right: 0.5rem;
+    }
+
+    .theme-toggle {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+    }
+
+    .theme-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #6b5ecd;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(30px);
+    }
+ 
+ 
+  </style>
+</head>
+<body>
+  <!-- Background images -->
+  <div class="background light-bg" id="lightBackground"></div>
+  <div class="background dark-bg" id="darkBackground"></div>
+
+  <div class="container">
+    <header>
+      <div class="logo">DynamicBG</div>
+      <div class="toggle-container">
+        <span class="toggle-label">Dark Mode</span>
+        <label class="theme-toggle">
+          <input type="checkbox" id="themeToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+  <!--  <main>
+      <section class="content">
+        <h1>Dynamic Background Images</h1>
+        <p>This website demonstrates how to implement changing background images that adapt to both light and dark modes. The backgrounds will automatically transition every few seconds to create a dynamic, engaging user experience.</p>
+        <p>Toggle the switch in the top-right corner to switch between light and dark mode. Notice how not only does the content styling change, but the background images transition as well.</p>
+        <p>You can easily customize this template with your own images and content to create a visually striking website that works well in both light and dark modes.</p>
+        <button class="btn">Learn More</button>
+      </section>
+    </main><!-->
+  </div>
+
+  <script>
+    // Define image arrays for light and dark modes
+    const lightImages = [
+  'images/L1.jpg',
+  'images/L2.jpg',
+  'images/L3.jpg',
+  'images/L4.jpg',
+  'images/L5.jpg',
+  'images/L6.jpg',
+  'images/L7.jpg'
+    ];
+    
+    const darkImages = [ 
+    'images/D1.jpg',
+    'images/D2.jpg',
+    'images/D3.jpg',
+    'images/D4.jpg',
+    'images/D5.jpg'
+    ];
+    
+    let currentLightIndex = 0;
+    let currentDarkIndex = 0;
+    const lightBackground = document.getElementById('lightBackground');
+    const darkBackground = document.getElementById('darkBackground');
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // Initialize with first images
+    lightBackground.style.backgroundImage = `url(${lightImages[0]})`;
+    darkBackground.style.backgroundImage = `url(${darkImages[0]})`;
+    
+    // Theme toggle functionality
+    themeToggle.addEventListener('change', () => {
+      if (themeToggle.checked) {
+        document.body.setAttribute('data-theme', 'dark');
+      } else {
+        document.body.setAttribute('data-theme', 'light');
+      }
+    });
+    
+    // Function to change background images
+    function changeBackgrounds() {
+      // Update light mode background
+      currentLightIndex = (currentLightIndex + 1) % lightImages.length;
+      const newLightBg = document.createElement('div');
+      newLightBg.className = 'background light-bg';
+      newLightBg.style.backgroundImage = `url(${lightImages[currentLightIndex]})`;
+      newLightBg.style.opacity = '0';
+      document.body.appendChild(newLightBg);
+      
+      setTimeout(() => {
+        newLightBg.style.opacity = '1';
+        setTimeout(() => {
+          lightBackground.style.backgroundImage = `url(${lightImages[currentLightIndex]})`;
+          document.body.removeChild(newLightBg);
+        }, 1500);
+      }, 100);
+      
+      // Update dark mode background
+      currentDarkIndex = (currentDarkIndex + 1) % darkImages.length;
+      const newDarkBg = document.createElement('div');
+      newDarkBg.className = 'background dark-bg';
+      newDarkBg.style.backgroundImage = `url(${darkImages[currentDarkIndex]})`;
+      newDarkBg.style.opacity = '0';
+      document.body.appendChild(newDarkBg);
+      
+      setTimeout(() => {
+        newDarkBg.style.opacity = document.body.getAttribute('data-theme') === 'dark' ? '1' : '0';
+        setTimeout(() => {
+          darkBackground.style.backgroundImage = `url(${darkImages[currentDarkIndex]})`;
+          document.body.removeChild(newDarkBg);
+        }, 1500);
+      }, 100);
+    }
+    
+    // Change backgrounds every 9 seconds
+    setInterval(changeBackgrounds, 9000);
+  </script>
+</body>
+</html> 
