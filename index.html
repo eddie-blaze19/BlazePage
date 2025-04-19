@@ -545,6 +545,7 @@ html {
         /* Header */
         header {
             background-color: var(--bg-secondary);
+            background-color: var(--card-color) ;
             box-shadow: var(--card-shadow);
             position: fixed;
             width: 100%;
@@ -838,6 +839,55 @@ html {
                 font-size: 1rem;
             }
         } 
+
+        /* BUTTONS */
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  font-weight: 600;
+  transition: all 300ms ease;
+  padding: 1rem;
+  width: 8rem;
+  border-radius: 2rem;
+}
+
+.btn-color-1,
+.btn-color-2 {
+  border: rgba(53, 53, 53, 0.521) 0.1rem solid;
+  color: var(--text-primary);
+}
+
+.btn-color-1:hover,
+.btn-color-2:hover {
+  cursor: pointer;
+}
+
+.btn-color-1,
+.btn-color-2:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+.btn-color-1:hover {
+  background: var(--Engineer);
+}
+
+.btn-color-2 {
+  background: none;
+}
+
+.btn-color-2:hover {
+  border: rgb(255, 255, 255) 0.1rem solid;
+}
+
+.btn-container {
+  gap: 1rem;
+}
         
         /* About section */
         .about {
@@ -1278,7 +1328,7 @@ html {
             <div class="hero-box">
  
                 <div class="hero-name">
-                <h1>Hello, My Name is </h1>
+                <h1>Hello, I am </h1>
                 <a href="https://www.linkedin.com/in/edwarddziworshie/" style="background-color: var(--bg-primary);"  >
                     <h1><span style="color: var(--Engineer); font-style: italic;">Edward Dziworshie </span></h1>
                 </a> 
@@ -1302,7 +1352,16 @@ html {
                     <img style="margin-right: 10px;" src="./images/finder.gif" alt="^">
                     <img style="margin-right: 10px;" src="./images/consulting.gif" alt="^">
                  <div class="inner-2"></div>
-                <a href="#contact" class="cta-button">Get In Touch</a>
+                 <div class="btn-container">
+                    <button
+                      class="btn btn-color-2"
+                      onclick="window.open('./assets/Edward Dziworshie CV v1.1.pdf')"
+                    >
+                      Download CV
+                    </button>
+                    <a href="#contact" class="btn btn-color-1">Get In Touch</a>
+                  </div> 
+                
 
             </div>
 
