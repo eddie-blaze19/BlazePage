@@ -20,11 +20,13 @@
             --footer-bg: #333333;
             --footer-text: #bbbbbb;
             --footer-border: #444444;
-            --card-color: rgba(255, 255, 255, 0.77);
+            --card-color: rgba(255, 255, 255, 0.555);
             --card-border:rgba(240, 242, 245, 0.3) ;
             --sun-and-moon :'☀️';
             --cloud:url("images/day.gif");
-            --Engineer:#4a6eb5;;
+            --sky:url(./images/L5.jpg);
+            --Engineer: linear-gradient(45deg, #5D59F2 , #6662F5 , #716DF8 , #7D78FA , #8A84FB );
+            --Engineer2:linear-gradient(45deg, #4B0082 , #8F00FF 36%, #D400FF 62%, #FF00C8 ); 
         }
         
         .dark-mode {
@@ -44,7 +46,9 @@
             --card-border:rgba(255, 255, 255, 0.125);
             --sun-and-moon :'🌙';
             --cloud:url("images/night.gif");
-            --Engineer:rgb(126, 128, 148);
+            --sky:url(./images/D2.jpg);
+            --Engineer:linear-gradient(45deg, #FFC37C , #FFA86A , #FF8E59 , #FF7348 , #FF5837 );
+            --Engineer2:linear-gradient(45deg, #FFC37C , #FFA86A , #FF8E59 , #FF7348 , #FF5837 ); 
 
         }
 
@@ -539,9 +543,8 @@ html {
             padding: 0 20px;
             align-content: space-between;
             z-index: 9;
-        } 
- 
- 
+        }  
+
         /* Header */
         header {
             background-color: var(--bg-secondary);
@@ -549,6 +552,7 @@ html {
             box-shadow: var(--card-shadow);
             position: fixed;
             width: 100%;
+            height: 55px;
             top: 0;
             z-index: 100;
             transition: all 0.3s ease;
@@ -558,15 +562,20 @@ html {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 10px 0;
         }
         
         .logo {
             font-size: 24px;
             font-weight: 700;
-            color: var(--text-primary);
-        }
-        
+            color: var(--text-primary);   
+            background-image: var(--Engineer2); 
+            background-clip: text; 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            text-decoration: none;
+            transition: color 0.3s ease;
+        } 
         .nav-links {
             display: flex;
             list-style: none;
@@ -651,12 +660,11 @@ html {
             align-items: center; 
             background-color: #1a1a1a00;
             transition: all 0.3s ease;
-            padding: 180px 0 100px;
-            /*background: linear-gradient(135deg, #ffffff00 0%, #f3f4f6 100%);*/
+            padding: 180px 0 100px; 
             background: linear-gradient(135deg, #ffffff00 0%, #f3f4f6 100%);
             width: 100%;
             max-width: 1980px;
-            background-image: url(./images/D5.jpg); 
+            background-image: var(--sky); 
             height: 100vh;
             background-size: cover;
             background-position: center;
@@ -664,33 +672,6 @@ html {
             z-index: 2;
 
         } 
-        .skybackground { 
-            top: 0;
-            left: 0;
-            position: absolute;
-            width: 100%;
-            height: 100%; 
-            z-index: 0; 
-            background-size: cover;
-            background-position: center;
-            transition: opacity 1.5s ease-in-out;
-    }
-
-    .light-bg {
-      opacity: 1;
-    }
-
-    .dark-bg {
-      opacity: 0;
-    }
-
-    [data-theme="light"] .light-bg {
-      opacity: 0;
-    }
-
-    [data-theme="dark"] .dark-bg {
-      opacity: 1;
-    }
         
         .hero-content { 
             height: 470px;
@@ -732,7 +713,8 @@ html {
         .hero h1 {
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: 47px; 
-            color: var(--text-primary);
+            color: var(--text-primary); 
+            transition: color 0.3s ease;
             z-index: 20; 
         }
         
@@ -874,15 +856,12 @@ html {
 }
 
 .btn-color-1:hover {
+    color: white;
   background: var(--Engineer);
 }
 
 .btn-color-2 {
   background: none;
-}
-
-.btn-color-2:hover {
-  border: rgb(255, 255, 255) 0.1rem solid;
 }
 
 .btn-container {
@@ -1309,9 +1288,7 @@ html {
             </nav>
         </div>
     </header>
-  <!-- Background images -->
-  <div class="skybackground light-bg" id="lightBackground"></div>
-  <div class="skybackground dark-bg" id="darkBackground"></div>
+ 
     <!-- Hero Section -->
     <section class="hero" id="hero" >  
   
@@ -1330,7 +1307,12 @@ html {
                 <div class="hero-name">
                 <h1>Hello, I am </h1>
                 <a href="https://www.linkedin.com/in/edwarddziworshie/" style="background-color: var(--bg-primary);"  >
-                    <h1><span style="color: var(--Engineer); font-style: italic;">Edward Dziworshie </span></h1>
+                    <h1><span style="color: var(--Engineer); 
+                        background-image: var(--Engineer);             
+                        background-clip: text; 
+                        -webkit-background-clip: text; 
+                        -webkit-text-fill-color: transparent; 
+                        text-decoration: none; font-style: italic;">Edward Dziworshie </span></h1>
                 </a> 
                 </div>
                 <div class="inner"></div>
@@ -1703,75 +1685,7 @@ html {
     </footer>
 
     <!-- JavaScript -->
-
- <!--Background slider JavaScript  -->
-<script>
-    // Define image arrays for light and dark modes
-    const lightImages = [
-  'images/L1.jpg',
-  'images/L2.jpg',
-  'images/L3.jpg',
-  'images/L4.jpg',
-  'images/L5.jpg' 
-    ];
-    
-    const darkImages = [ 
-    'images/D1.jpg',
-    'images/D2.jpg',
-    'images/D3.jpg',
-    'images/D4.jpg',
-    'images/D5.jpg'
-    ];
-    
-    let currentLightIndex = 0;
-    let currentDarkIndex = 0;
-    const lightBackground = document.getElementById('lightBackground');
-    const darkBackground = document.getElementById('darkBackground'); 
-    
-    // Initialize with first images
-    lightBackground.style.backgroundImage = `url(${lightImages[0]})`;
-    darkBackground.style.backgroundImage = `url(${darkImages[0]})`;
-    
  
-    // Function to change background images
-    function changeBackgrounds() {
-      // Update light mode background
-      currentLightIndex = (currentLightIndex + 1) % lightImages.length;
-      const newLightBg = document.createElement('div');
-      newLightBg.className = 'skybackground light-bg';
-      newLightBg.style.backgroundImage = `url(${lightImages[currentLightIndex]})`;
-      newLightBg.style.opacity = '0';
-      document.body.appendChild(newLightBg);
-      
-      setTimeout(() => {
-        newLightBg.style.opacity = '1';
-        setTimeout(() => {
-          lightBackground.style.backgroundImage = `url(${lightImages[currentLightIndex]})`;
-          document.body.removeChild(newLightBg);
-        }, 9500);
-      }, 100);
-      
-      // Update dark mode background
-      currentDarkIndex = (currentDarkIndex + 1) % darkImages.length;
-      const newDarkBg = document.createElement('div');
-      newDarkBg.className = 'skybackground dark-bg';
-      newDarkBg.style.backgroundImage = `url(${darkImages[currentDarkIndex]})`;
-      newDarkBg.style.opacity = '0';
-      document.body.appendChild(newDarkBg);
-      
-      setTimeout(() => {
-        newDarkBg.style.opacity = document.body.getAttribute('data-theme') === 'dark' ? '1' : '0';
-        setTimeout(() => {
-          darkBackground.style.backgroundImage = `url(${darkImages[currentDarkIndex]})`;
-          document.body.removeChild(newDarkBg);
-        }, 8500);
-      }, 100);
-    }
-    
-    // Change backgrounds every 19 seconds
-    setInterval(changeBackgrounds, 19000);
-  </script>
-     
     <!--Darkmode JavaScript  -->
     <script>
         // Mobile menu toggle
