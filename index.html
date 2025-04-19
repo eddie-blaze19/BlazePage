@@ -708,8 +708,10 @@ html {
             width: 170px;
             height: 170px; 
         }
-        
-        
+        .hero-box .hero-img img:hover{
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        } 
         .hero h1 {
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: 47px; 
@@ -764,7 +766,7 @@ html {
             position: absolute;
             width: 100%;
             height: 2px;
-            background: linear-gradient(to right, transparent, rgba(79, 172, 254, 0.7), transparent);
+            background: linear-gradient(to right, transparent, rgba(243, 249, 255, 0.925), transparent);
             animation: moveLine linear infinite;
         }
         
@@ -842,32 +844,22 @@ html {
 .btn-color-2 {
   border: rgba(53, 53, 53, 0.521) 0.1rem solid;
   color: var(--text-primary);
+  background: none;
 }
-
-.btn-color-1:hover,
-.btn-color-2:hover {
-  cursor: pointer;
-}
+ 
 
 .btn-color-1,
 .btn-color-2:hover {
   background: var(--accent-color);
   color: white;
+  cursor: pointer;
 }
 
 .btn-color-1:hover {
     color: white;
   background: var(--Engineer);
 }
-
-.btn-color-2 {
-  background: none;
-}
-
-.btn-container {
-  gap: 1rem;
-}
-        
+    
         /* About section */
         .about {
             padding: 80px 0;
@@ -1184,7 +1176,7 @@ html {
             color: var(--footer-text);
         }
         
-        /* Responsive design */
+        /* Responsive style */
         @media screen and (max-width: 992px) {
             .about-text, .about-image {
                 flex-basis: 100%;
