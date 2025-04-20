@@ -690,9 +690,14 @@ html {
         } 
          .hero-box {
             width: 100%;
-            display: flex;  
-            flex-direction: row; 
+            display: grid;  
+            grid-template-columns: 1fr 1fr 1fr;
             
+        }
+        .hero-box-bottom {
+            width: 100%;
+            display: grid;  
+            grid-template-columns: 1fr 1fr 1fr;
         }
         .hero-box .hero-img  {
             width: 220px;
@@ -707,6 +712,12 @@ html {
         .hero-box .hero-img img{
             width: 170px;
             height: 170px; 
+
+        }
+        .hero-box-img {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            width: 210px;
         }
         .hero-box .hero-img img:hover{
             transform: scale(1.1);
@@ -1203,13 +1214,14 @@ html {
             .nav-links {
                 position: fixed;
                 right: 0;
-                height: 100vh;
+                height: 370px;
                 top: 80px;
-                background-color: var(--bg-secondary);
+                background-color: var(--card-color) ;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 width: 50%;
+                border-radius: 4rem;
                 transform: translateX(100%);
                 transition: transform 0.5s ease-in, background-color 0.3s ease;
                 box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
@@ -1242,6 +1254,182 @@ html {
             
             .footer-section {
                 flex-basis: 100%;
+            }
+        }
+        @media screen and (max-width: 400px) {
+            .hero-content { 
+            height: 570px;
+            max-width: 290px;   
+            padding: 16px;  
+            z-index: 10; 
+        } 
+        .hero-box .hero-img  {
+         display: none;
+        }
+        .hero-box {
+            display: flexbox;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%; 
+        }
+        .inner-2{
+            height: 2px;
+        }
+        .hero-box-bottom {
+            width: 100%;
+            display: grid;  
+            grid-template-columns: 1fr;
+            margin-right: 7px;
+        }
+
+        .btn-container {
+ display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+}
+  
+
+    }
+
+    @media screen and (max-width: 480px) {
+            .hero-content { 
+                height: auto;
+                min-height: 500px;
+                max-width: 100%;
+                width: 90%;
+                padding: 20px;
+                margin: 0 auto;
+            }
+            
+            .hero-box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                width: 100%;
+            }
+            
+            .hero-name {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero-name h1 {
+                font-size: 32px;
+                margin-bottom: 10px;
+            }
+            
+            .hero-img {
+                margin: 20px auto;
+                width: 180px;
+                height: 180px;
+            }
+            
+            .hero-img img {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .hero p {
+                font-size: 20px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            
+            .hero-box-bottom {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            .hero-box-img {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .hero-box-img img {
+                width: 35px;
+                height: 35px;
+                margin: 0 8px;
+            }
+            
+            .btn-container {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+                margin-top: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            /* Portfolio section fixes */
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Services section fixes */
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Header adjustments */
+            .logo {
+                font-size: 20px;
+            }
+            
+            /* Footer adjustments */
+            .footer-section {
+                flex-basis: 100%;
+                margin-bottom: 30px;
+            }
+        }
+        
+        /* Add intermediate breakpoint for small tablets */
+        @media screen and (min-width: 481px) and (max-width: 767px) {
+            .hero-content {
+                height: auto;
+                min-height: 450px;
+                max-width: 90%;
+                padding: 25px;
+            }
+            
+            .hero-box {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-name {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            
+            .hero-box-bottom {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+            }
+            
+            .hero-box-img {
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            
+            .btn-container {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
             }
         }
     </style>
@@ -1320,19 +1508,25 @@ html {
                      , Tech Researcher 
                      , and Project Manager 
                 </p> 
-                <div class="hero-box"style="margin-top: 17px ;"  >
+                <div class="hero-box-bottom"style="margin-top: 17px ;"  >
+                    <div class="hero-box-img" >
+ 
                     <img style="margin-right: 10px;" src="./images/update.gif" alt="^">
                     <img style="margin-right: 10px;" src="./images/cloud.gif" alt="^">
                     <img style="margin-right: 10px;" src="./images/finder.gif" alt="^">
                     <img style="margin-right: 10px;" src="./images/consulting.gif" alt="^">
-                 <div class="inner-2"></div>
+                </div>
+                    <div class="inner-2">
+
+
+                 </div>
                  <div class="btn-container">
-                    <button
+                    <a
                       class="btn btn-color-2"
                       onclick="window.open('./assets/Edward Dziworshie CV Project Manager.pdf', '_blank')"
-                    >
-                      Download CV
-                    </button>
+                    style="padding-left: 11px;"
+                      >
+                      Download CV</a>
                     <a href="#contact" class="btn btn-color-1">Get In Touch</a>
                   </div> 
                 
