@@ -123,7 +123,7 @@ The color scheme is controlled by CSS variables in the `:root` selector. Modify 
 
 ### Personalization
 
-1. Replace all instances of "Edward Dziworshie" with Edward Dziworshie
+1. Replace all instances of "Edward Dziworshie" with Your Name
 2. Update the professional description in the hero section
 3. Replace portfolio images in the `images/` directory
 4. Update skills and their progress percentages
