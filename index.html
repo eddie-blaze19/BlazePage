@@ -514,7 +514,7 @@ html {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background-image: url();
+            background-image: url(); 
         }
         
         body {
@@ -597,13 +597,13 @@ html {
         .toggle-container {
             display: flex;
             align-items: center;
+            margin-right: 30px;
         }
         
         .theme-toggle {
             position: relative;
             width: 60px;
-            height: 30px;
-            margin-left: 20px;
+            height: 30px; 
             border-radius: 15px;
             background-color: var(--bg-primary);
             cursor: pointer;
@@ -670,6 +670,7 @@ html {
             background-position: center;
             background-repeat: no-repeat;
             z-index: 2;
+            overflow-x: hidden;
 
         } 
         
@@ -1206,20 +1207,19 @@ html {
             }
         }
         
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 768px) { 
             .toggle-container {
-                margin-right: 50px;
-            }
-            
+                margin-right: 0;
+            } 
             .nav-links {
                 position: fixed;
                 right: 0;
-                height: 370px;
+                height: 300px;
                 top: 80px;
                 background-color: var(--card-color) ;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+                align-items: center; 
                 width: 50%;
                 border-radius: 4rem;
                 transform: translateX(100%);
@@ -1229,7 +1229,7 @@ html {
             }
             
             .nav-links li {
-                margin: 20px 0;
+                margin: 10px 0;
             }
             
             .burger {
@@ -1272,10 +1272,7 @@ html {
             align-items: center;
             justify-content: center;
             width: 100%; 
-        }
-        .inner-2{
-            height: 2px;
-        }
+        } 
         .hero-box-bottom {
             width: 100%;
             display: grid;  
@@ -1292,7 +1289,7 @@ html {
 
     }
 
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 549px) {
             .hero-content { 
                 height: auto;
                 min-height: 500px;
@@ -1394,7 +1391,7 @@ html {
         }
         
         /* Add intermediate breakpoint for small tablets */
-        @media screen and (min-width: 481px) and (max-width: 767px) {
+        @media screen and (min-width: 550px) and (max-width: 767px) {
             .hero-content {
                 height: auto;
                 min-height: 450px;
@@ -1448,17 +1445,21 @@ html {
         <div class="container">
             <nav>
                 <div class="logo">Blaze Portfolio </div>
-                <div class="toggle-container">
-                    <div class="theme-toggle" id="theme-toggle">
-                        <div class="toggle-thumb"></div>
-                    </div>
-                </div>
+
                 <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
+                    <li>
+                        <div class="toggle-container">
+                            <div class="theme-toggle" id="theme-toggle">
+                                <div class="toggle-thumb"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#hero">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#contact">Contact</a></li>
+
                 </ul>
                 <div class="burger">
                     <div class="line1"></div>
