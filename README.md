@@ -1,4 +1,4 @@
-# Blaze Page Portfolio
+# Blaze Page 
 
 ![Blaze Portfolio Banner](/images/banner.png)
 
